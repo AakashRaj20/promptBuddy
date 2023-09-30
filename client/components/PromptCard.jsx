@@ -13,6 +13,7 @@ import { deletePrompt } from "@redux_store/slices/getPostLoggedUserSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
+import baseUrl from "@redux_store/baseurl";
 import axios from "axios";
 
 const PromptCard = ({ post, handleEdit, handleTagClick }) => {
@@ -78,7 +79,7 @@ const PromptCard = ({ post, handleEdit, handleTagClick }) => {
 
   const handleDelete = async () => {
     dispatch(deletePrompt({ promptId: post._id }));
-    await axios.delete(`http://localhost:8000/api/delete-prompt/${post._id}`);
+    await axios.delete(`${baseUrl}/api/delete-prompt/${post._id}`);
   };
 
   return (

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import baseUrl from "@redux_store/baseurl";
 
 const initialState = {
   savedPrompts: [{prompts: []}],
@@ -12,7 +13,7 @@ export const fetchSavedData = createAsyncThunk(
   async ({userId}) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/user/${userId}/savedPrompts`
+        `${baseUrl}/api/user/${userId}/savedPrompts`
       );
       const data = await response.data;
       return data;
@@ -27,7 +28,7 @@ export const savePrompt = createAsyncThunk(
   async ({ sessionId, postId }) => {
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/user/${sessionId}/prompt/${postId}/save`
+        `${baseUrl}/api/user/${sessionId}/prompt/${postId}/save`
       );
       console.log(response.data);
     } catch (error) {
@@ -41,7 +42,7 @@ export const unSavePrompt = createAsyncThunk(
   async ({ sessionId, postId }) => {
     try {
       await axios.delete(
-        `http://localhost:8000/api/user/${sessionId}/prompt/${postId}/unsave`
+        `${baseUrl}/api/user/${sessionId}/prompt/${postId}/unsave`
       );
     } catch (error) {
       console.error(error);

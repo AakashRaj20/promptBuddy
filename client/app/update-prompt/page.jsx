@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-
+import baseUrl from "@redux_store/baseurl";
 import Form from "@components/Form";
 
 const UpdatePrompt = () => {
@@ -15,7 +15,7 @@ const UpdatePrompt = () => {
 
   useEffect(() => {
     const getPromptDetails = async () => {
-      const response = await fetch(`http://localhost:8000/api/prompt/${promptId}`);
+      const response = await fetch(`${baseUrl}/api/prompt/${promptId}`);
       const data = await response.json();
 
       setPost({
@@ -34,7 +34,7 @@ const UpdatePrompt = () => {
     if (!promptId) return alert("Missing PromptId!");
 
     try {
-      const response = await fetch(`http://localhost:8000/api/edit-prompt/${promptId}`, {
+      const response = await fetch(`${baseUrl}/api/edit-prompt/${promptId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

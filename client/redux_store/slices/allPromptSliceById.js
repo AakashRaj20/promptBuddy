@@ -1,11 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import baseUrl from "@redux_store/baseurl";
 
 export const fetchAllPromptsById = createAsyncThunk(
   "content/fetchAllPrompts",
   async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/prompts`);
+      const response = await axios.get(`${baseUrl}/api/prompts`);
       const data = await response.data;
       return data;
     } catch (error) {

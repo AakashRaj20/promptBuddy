@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import baseUrl from "@redux_store/baseurl";
 
 export const fetchPromptsLoggedUser = createAsyncThunk("content/fetchPromptsLoggedUser", async (id) => {
-    const response = await axios.get(`http://localhost:8000/api/user/${id}/posts`);
+    const response = await axios.get(`${baseUrl}/api/user/${id}/posts`);
     const data = await response.data;
     return data;
 });

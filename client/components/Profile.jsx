@@ -7,6 +7,7 @@ import { savedPrompts } from "@redux_store/slices/savedPromptSlice";
 import { prompts } from "@redux_store/slices/getPostLoggedUserSlice";
 import { savedPromptIsLoading } from "@redux_store/slices/savedPromptSlice";
 import { loggedUserIsLoading } from "@redux_store/slices/getPostLoggedUserSlice";
+import Loading from "./Loading";
 import { useDispatch, useSelector } from "react-redux";
 
 const Profile = ({ name, desc, handleEdit }) => {
@@ -15,7 +16,7 @@ const Profile = ({ name, desc, handleEdit }) => {
   const dispatch = useDispatch();
   const savedPrompt = useSelector(savedPrompts);
   const loggedPrompts = useSelector(prompts);
-  const isLoading = useSelector(loggedUserIsLoading);
+  const isLoggedUserLoading = useSelector(loggedUserIsLoading);
   const savedPromptLoading = useSelector(savedPromptIsLoading);
   const [savedData, setSavedData] = useState([]);
   const [activeBtn, setActiveBtn] = useState("myposts");
@@ -36,7 +37,7 @@ const Profile = ({ name, desc, handleEdit }) => {
 
   useEffect(() => {
     setSavedData(loggedPrompts);
-  }, [isLoading, loggedPrompts]);
+  }, [isLoggedUserLoading, loggedPrompts]);
 
   useEffect(() => {
     savedPrompt && setSavedData(savedPrompt[0]?.prompts);
@@ -64,17 +65,21 @@ const Profile = ({ name, desc, handleEdit }) => {
           </button>
         </div>
       )}
-      <div className="mt-10 prompt_layout">
-        {savedData.length > 0 &&
-          savedData.map((post) => (
-            <PromptCard
-              key={post._id}
-              post={post}
-              handleEdit={() => handleEdit && handleEdit(post)}
-            />
-          ))}
-      </div>
-      {loggedPrompts &&
+      {isLoggedUserLoading || savedPromptLoading ? (
+        <Loading />
+      ) : (
+        <div className="mt-10 prompt_layout">
+          {savedData.length > 0 &&
+            savedData.map((post) => (
+              <PromptCard
+                key={post._id}
+                post={post}
+                handleEdit={() => handleEdit && handleEdit(post)}
+              />
+            ))}
+        </div>
+      )}
+      {!isLoggedUserLoading && loggedPrompts &&
         loggedPrompts.length === 0 &&
         activeBtn === "myposts" && (
           <div className="flex justify-center mt-10">
@@ -84,7 +89,7 @@ const Profile = ({ name, desc, handleEdit }) => {
             </p>
           </div>
         )}
-      {savedPrompt === undefined && activeBtn === "savedposts" && (
+      {!savedPromptIsLoading && savedPrompt === undefined && activeBtn === "savedposts" && (
         <div className="flex justify-center mt-10">
           <p className="text-2xl">
             No saved prompts yet. Explore and save amazing prompts

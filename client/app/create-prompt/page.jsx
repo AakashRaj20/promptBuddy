@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-
+import baseUrl from "@redux_store/baseurl";
 import Form from "@components/Form";
 
 const CreatePrompt = () => {
@@ -18,7 +18,7 @@ const CreatePrompt = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("http://localhost:8000/api/create-prompt", {
+      const response = await fetch(`${baseUrl}/api/create-prompt`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json", // Add this line

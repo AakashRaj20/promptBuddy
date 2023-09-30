@@ -6,17 +6,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllPromptsById } from "@redux_store/slices/allPromptSliceById";
 import { allPrompts } from "@redux_store/slices/allPromptSliceById";
 import { fetchSavedData } from "@redux_store/slices/savedPromptSlice";
+import { allPromptsLoading } from "@redux_store/slices/allPromptSliceById";
 import PromptCard from "./PromptCard";
+import Loading from "./Loading";
 
 const PromptCardList = ({ data, handleTagClick }) => {
   const dispatch = useDispatch();
   const { data: session } = useSession();
+  const isPromptLoading = useSelector(allPromptsLoading);
 
   useEffect(() => {
     session?.user && dispatch(fetchSavedData({ userId: session?.user.id }));
   }, [session]);
 
-  return (
+  return isPromptLoading ? (
+    <Loading />
+  ) : (
     <div className="mt-16 prompt_layout">
       {data.map((post) => (
         <PromptCard
