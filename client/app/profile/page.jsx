@@ -15,9 +15,9 @@ const MyProfile = () => {
   const loggedPrompts = useSelector(prompts);
   const [myPosts, setMyPosts] = useState([]);
 
-  if(!session?.user){
-    router.push('/');
-  }
+  // if(!session?.user){
+  //   router.push('/');
+  // }
 
   useEffect(() => {
     if (session?.user.id) {
