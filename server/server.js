@@ -2,7 +2,6 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
-import dbConfig from "./config/database.config.js";
 import router from "./routes/prompt.route.js";
 import dotenv from "dotenv";
 
