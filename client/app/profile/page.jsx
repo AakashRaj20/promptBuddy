@@ -1,12 +1,14 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPromptsLoggedUser } from "@redux_store/slices/getPostLoggedUserSlice";
 import { prompts } from "@redux_store/slices/getPostLoggedUserSlice";
-import Profile from "@components/Profile";
+
+const Profile = dynamic(() => import("@components/Profile"));
 
 const MyProfile = () => {
   const router = useRouter();
@@ -14,10 +16,6 @@ const MyProfile = () => {
   const dispatch = useDispatch();
   const loggedPrompts = useSelector(prompts);
   const [myPosts, setMyPosts] = useState([]);
-
-  // if(!session?.user){
-  //   router.push('/');
-  // }
 
   useEffect(() => {
     if (session?.user.id) {
