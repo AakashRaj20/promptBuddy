@@ -29,7 +29,7 @@ const Profile = ({ name, desc, handleEdit }) => {
   };
 
   const handleSavedPost = async () => {
-    savedPrompt && setSavedData(savedPrompt[0]?.prompts);
+    savedPrompt ? setSavedData(savedPrompt[0]?.prompts) : setSavedData([]);
     setActiveBtn("savedposts");
   };
 
@@ -44,7 +44,7 @@ const Profile = ({ name, desc, handleEdit }) => {
   useEffect(() => {
     savedPrompt && setSavedData(savedPrompt[0]?.prompts);
   }, [savedPromptLoading, savedPrompt]);
-
+console.log(savedPrompt);
   return (
     <section className="w-full">
       <h1 className="head_text text-left">
@@ -54,13 +54,13 @@ const Profile = ({ name, desc, handleEdit }) => {
       {pathname === "/profile" && (
         <div className="flex justify-evenly mt-9">
           <button
-            className={activeBtn === "myposts" ? "black_btn" : "outline_btn"}
+            className={activeBtn === "myposts" ? "mobile_black_btn" : "mobile_outline_btn"}
             onClick={handleMypost}
           >
             My Posts
           </button>
           <button
-            className={activeBtn === "savedposts" ? "black_btn" : "outline_btn"}
+            className={activeBtn === "savedposts" ? "mobile_black_btn" : "mobile_outline_btn"}
             onClick={handleSavedPost}
           >
             Saved Posts
@@ -85,15 +85,15 @@ const Profile = ({ name, desc, handleEdit }) => {
         loggedPrompts.length === 0 &&
         activeBtn === "myposts" && (
           <div className="flex justify-center mt-10">
-            <p className="text-2xl">
+            <p className="text-2xl text-center">
               No prompts created yet. Create some awesome prompts and share with
               the community.
             </p>
           </div>
         )}
-      {!savedPromptIsLoading && savedPrompt === undefined && activeBtn === "savedposts" && (
+      {(!savedPromptIsLoading || savedPrompt === undefined || savedPrompt[0]?.prompts.length === 0) && activeBtn === "savedposts" && (
         <div className="flex justify-center mt-10">
-          <p className="text-2xl">
+          <p className="text-2xl text-center">
             No saved prompts yet. Explore and save amazing prompts
           </p>
         </div>

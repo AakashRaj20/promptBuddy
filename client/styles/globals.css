@@ -81,8 +81,16 @@
   @apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
 }
 
+.mobile_black_btn {
+  @apply rounded-full border border-black bg-black py-1.5 px-5 text-white text-center text-sm font-inter flex items-center justify-center;
+}
+
 .outline_btn {
   @apply rounded-full border border-black bg-transparent py-1.5 px-5 text-black transition-all hover:bg-black hover:text-white text-center text-sm font-inter flex items-center justify-center;
+}
+
+.mobile_outline_btn {
+  @apply rounded-full border border-black bg-transparent py-1.5 px-5 text-center text-sm font-inter flex items-center justify-center;
 }
 
 .head_text {
