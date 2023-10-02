@@ -13,8 +13,6 @@ const CreatePrompt = () => {
   const [submitting, setIsSubmitting] = useState(false);
   const [post, setPost] = useState({ prompt: "", tag: "" });
 
-  if(!session) router.push("/")
-
   const createPrompt = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
