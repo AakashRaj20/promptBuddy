@@ -1,3 +1,3 @@
-const baseUrl = "https://promptbuddy.onrender.com";
+const baseUrl = "https://white-perch-toga.cyclic.cloud";
 
 export default baseUrl;
