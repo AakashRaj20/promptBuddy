@@ -33,8 +33,7 @@ const PromptCard = ({ post, handleEdit, handleTagClick }) => {
         savedPrompt &&
         savedPrompt[0]?.prompts.some((savedPost) => savedPost._id === post._id);
       setIsSaved(isPostSaved);
-    } else {
-      dispatch(addSavedPrompt({ prompt: post }));
+      console.log(isPostSaved);
     }
   }, [session, savedPrompt, post]);
 
@@ -71,7 +70,6 @@ const PromptCard = ({ post, handleEdit, handleTagClick }) => {
         );
         await dispatch(addSavedPrompt({ prompt: post }));
       }
-
     } catch (error) {
       console.log(error);
     }
