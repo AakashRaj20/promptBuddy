@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import baseUrl from "@redux_store/baseurl";
@@ -12,6 +12,10 @@ const CreatePrompt = () => {
 
   const [submitting, setIsSubmitting] = useState(false);
   const [post, setPost] = useState({ prompt: "", tag: "" });
+
+  useEffect(() => {
+    !session && router.push("/");
+  },[session])
 
   const createPrompt = async (e) => {
     e.preventDefault();
