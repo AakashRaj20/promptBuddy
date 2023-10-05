@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import baseUrl from "@redux_store/baseurl";
 import Form from "@components/Form";
@@ -10,8 +11,13 @@ const UpdatePrompt = () => {
   const searchParams = useSearchParams();
   const promptId = searchParams.get("id");
 
+  const { data: session} = useSession();
   const [post, setPost] = useState({ prompt: "", tag: "", });
   const [submitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    !session && router.push("/");
+  },[session]);
 
   useEffect(() => {
     const getPromptDetails = async () => {

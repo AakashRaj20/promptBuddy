@@ -2,12 +2,12 @@ import Prompt from "../model/prompt.js";
 import User from "../model/user.js";
 import SavedPrompt from "../model/savedPrompt.js";
 import mongoose from "mongoose";
+import { isAuthenticated } from "../middleware/middleware.js";
 
 // GET all prompts
 export const getAllPrompts = async (req, res) => {
   try {
     const prompts = await Prompt.find({}).populate("creator");
-
     return res.status(200).json(prompts);
   } catch (error) {
     return res.status(500).json({ message: error.message });

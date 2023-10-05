@@ -38,4 +38,4 @@ mongoose
     process.exit();
   });
 
-app.get("/", (req, res) => res.json({ message: "hello node" }));
+app.get("/", (req, res) => res.json({ message: req.user }));

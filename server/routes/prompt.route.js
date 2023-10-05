@@ -1,4 +1,5 @@
 import express from "express";
+import { isAuthenticated } from "../middleware/middleware.js";
 import {
   createPost,
   getPostLoggedUser,
@@ -22,6 +23,7 @@ router.patch("/edit-prompt/:id", editPrompt);
 router.delete("/delete-prompt/:id", deletePrompt);
 router.delete("/user/:userId/prompt/:promptId/unsave", unsavePrompt);
 router.get("/user/:userId/savedPrompts", getSavedPrompts);
+
 
 
 export default router;

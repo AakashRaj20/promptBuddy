@@ -44,7 +44,7 @@ const Profile = ({ name, desc, handleEdit }) => {
   useEffect(() => {
     savedPrompt && setSavedData(savedPrompt[0]?.prompts);
   }, [savedPromptLoading, savedPrompt]);
-console.log(savedPrompt);
+
   return (
     <section className="w-full">
       <h1 className="head_text text-left">

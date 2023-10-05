@@ -5,7 +5,6 @@ import { useSearchParams } from "next/navigation";
 import { fetchPromptsLoggedUser } from "@redux_store/slices/getPostLoggedUserSlice";
 import { prompts } from "@redux_store/slices/getPostLoggedUserSlice";
 import { useDispatch, useSelector } from "react-redux";
-
 import Profile from "@components/Profile";
 
 const UserProfile = ({ params }) => {

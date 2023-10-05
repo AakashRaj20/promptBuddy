@@ -24,6 +24,10 @@ const MyProfile = () => {
     }
   }, [session?.user.id]);
 
+  useEffect(() => {
+    !session && router.push("/");
+  },[session]);
+
   const handleEdit = (post) => {
     router.push(`/update-prompt?id=${post._id}`);
   };
