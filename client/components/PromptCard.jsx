@@ -33,7 +33,6 @@ const PromptCard = ({ post, handleEdit, handleTagClick }) => {
         savedPrompt &&
         savedPrompt[0]?.prompts.some((savedPost) => savedPost._id === post._id);
       setIsSaved(isPostSaved);
-      console.log(isPostSaved);
     }
   }, [session, savedPrompt, post]);
 

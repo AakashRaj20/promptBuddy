@@ -9,7 +9,7 @@ import { savedPrompts } from "@redux_store/slices/savedPromptSlice";
 import { prompts } from "@redux_store/slices/getPostLoggedUserSlice";
 import { savedPromptIsLoading } from "@redux_store/slices/savedPromptSlice";
 import { loggedUserIsLoading } from "@redux_store/slices/getPostLoggedUserSlice";
-import Loading from "./Loading";
+import Loading from "@components/Loading";
 import { useDispatch, useSelector } from "react-redux";
 
 const Profile = ({ name, desc, handleEdit }) => {
@@ -20,16 +20,16 @@ const Profile = ({ name, desc, handleEdit }) => {
   const loggedPrompts = useSelector(prompts);
   const isLoggedUserLoading = useSelector(loggedUserIsLoading);
   const savedPromptLoading = useSelector(savedPromptIsLoading);
-  const [savedData, setSavedData] = useState([]);
+  const [data, setData] = useState([]);
   const [activeBtn, setActiveBtn] = useState("myposts");
 
   const handleMypost = async () => {
-    loggedPrompts.length > 0 ? setSavedData(loggedPrompts) : setSavedData([]);
+    loggedPrompts.length > 0 ? setData(loggedPrompts) : setData([]);
     setActiveBtn("myposts");
   };
 
   const handleSavedPost = async () => {
-    savedPrompt ? setSavedData(savedPrompt[0]?.prompts) : setSavedData([]);
+    savedPrompt ? setData(savedPrompt[0]?.prompts) : setData([]);
     setActiveBtn("savedposts");
   };
 
@@ -38,11 +38,13 @@ const Profile = ({ name, desc, handleEdit }) => {
   }, [session]);
 
   useEffect(() => {
-    setSavedData(loggedPrompts);
+    setData(loggedPrompts);
   }, [isLoggedUserLoading, loggedPrompts]);
 
   useEffect(() => {
-    savedPrompt && setSavedData(savedPrompt[0]?.prompts);
+    activeBtn === "savedposts" &&
+      savedPrompt &&
+      setData(savedPrompt[0]?.prompts);
   }, [savedPromptLoading, savedPrompt]);
 
   return (
@@ -71,8 +73,8 @@ const Profile = ({ name, desc, handleEdit }) => {
         <Loading />
       ) : (
         <div className="mt-10 prompt_layout">
-          {savedData.length > 0 &&
-            savedData.map((post) => (
+          {data.length > 0 &&
+            data.map((post) => (
               <PromptCard
                 key={post._id}
                 post={post}
