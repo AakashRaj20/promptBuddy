@@ -1,8 +1,4 @@
-"use client"
-
-import { useEffect } from "react";
 import Image from "next/image";
-import { useSearchParams, usePathname } from "next/navigation";
 
 const Loading = () => {
  

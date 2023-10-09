@@ -71,30 +71,61 @@
   }
 }
 
+@media (prefers-color-scheme: dark) {
+  .dark .main:before {
+    background: radial-gradient(circle, rgba(2, 0, 36, 0) 0, #1f1f1f 100%);
+  }
+}
+
 /* Tailwind Styles */
+@layer components {
+  .bottombar {
+    @apply fixed bottom-0 z-10 w-full rounded-t-3xl bg-glassmorphism p-4 backdrop-blur-lg xs:px-7 md:hidden;
+  }
+
+  .bottombar_container {
+    @apply flex items-center justify-between gap-3 xs:gap-5;
+  }
+
+  .bottombar_link {
+    @apply relative flex flex-col items-center gap-2 rounded-lg p-2 sm:flex-1 sm:px-2 sm:py-2.5;
+  }
+}
+
+.main_div {
+  @apply main dark:bg-black;
+}
+
+.gradient_div {
+  @apply gradient dark:bg-black;
+}
+
+.dark_gradient {
+  @apply bg-gradient-to-r from-gray-900 via-gray-600 to-gray-300 dark:from-gray-400 dark:via-gray-700 dark:to-gray-900;
+}
 
 .app {
   @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6;
 }
 
 .black_btn {
-  @apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
+  @apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center dark:hover:bg-orange-300 dark:hover:text-black dark:bg-black dark:text-white;
 }
 
 .mobile_black_btn {
-  @apply rounded-full border border-black bg-black py-1.5 px-5 text-white text-center text-sm font-inter flex items-center justify-center;
+  @apply rounded-full border border-black bg-black py-1.5 px-5 text-white text-center text-sm font-inter flex items-center justify-center dark:bg-orange-300 dark:text-black;
 }
 
 .outline_btn {
-  @apply rounded-full border border-black bg-transparent py-1.5 px-5 text-black transition-all hover:bg-black hover:text-white text-center text-sm font-inter flex items-center justify-center;
+  @apply rounded-full border border-black bg-transparent py-1.5 px-5 text-black transition-all hover:bg-black hover:text-white text-center text-sm font-inter flex items-center justify-center dark:bg-orange-300;
 }
 
 .mobile_outline_btn {
-  @apply rounded-full border border-black bg-transparent py-1.5 px-5 text-center text-sm font-inter flex items-center justify-center;
+  @apply rounded-full border border-black bg-transparent py-1.5 px-5 text-center text-sm font-inter flex items-center justify-center dark:text-white dark:bg-black;
 }
 
 .head_text {
-  @apply mt-5 text-5xl font-extrabold leading-[1.15] text-black sm:text-6xl;
+  @apply mt-5 text-5xl font-extrabold leading-[1.15] text-black sm:text-6xl dark:text-gray-200;
 }
 
 .orange_gradient {
@@ -110,19 +141,19 @@
 }
 
 .desc {
-  @apply mt-5 text-lg text-gray-600 sm:text-xl max-w-2xl;
+  @apply mt-5 text-lg text-gray-600 sm:text-xl max-w-2xl dark:text-white;
 }
 
 .search_input {
-  @apply block w-full rounded-md border border-gray-200 bg-white py-2.5 font-satoshi pl-5 pr-12 text-sm shadow-lg font-medium focus:border-black focus:outline-none focus:ring-0;
+  @apply block w-full rounded-md border border-gray-200 bg-white py-2.5 font-satoshi pl-5 pr-12 text-sm shadow-lg font-medium focus:border-black focus:outline-none focus:ring-0 dark:text-black;
 }
 
 .copy_btn {
-  @apply w-7 h-7 rounded-full bg-white/10 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur flex justify-center items-center cursor-pointer;
+  @apply w-7 h-7 rounded-full bg-white/5 flex justify-center items-center cursor-pointer;
 }
 
 .glassmorphism {
-  @apply rounded-xl border border-gray-200 bg-white/20 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur p-5;
+  @apply rounded-xl border border-gray-200 bg-white/20 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur p-5 dark:bg-black/20 dark:border-none dark:shadow-none;
 }
 
 .prompt_layout {
@@ -136,11 +167,11 @@
 
 /* Form Component */
 .form_textarea {
-  @apply w-full flex rounded-lg h-[200px] mt-2 p-3 text-sm text-gray-500 outline-0;
+  @apply w-full flex rounded-lg h-[200px] mt-2 p-3 text-sm text-gray-500 outline-0 dark:text-gray-200;
 }
 
 .form_input {
-  @apply w-full flex rounded-lg mt-2 p-3 text-sm text-gray-500 outline-0;
+  @apply w-full flex rounded-lg mt-2 p-3 text-sm text-gray-500 outline-0 dark:text-gray-200;
 }
 
 /* Nav Component */
@@ -158,7 +189,7 @@
 
 /* PromptCard Component */
 .prompt_card {
-  @apply flex-1 break-inside-avoid rounded-lg border border-gray-300 bg-white/20 bg-clip-padding p-6 pb-4 backdrop-blur-lg backdrop-filter md:w-[360px] w-full h-fit;
+  @apply flex-1 break-inside-avoid rounded-lg border border-gray-300 bg-white/20 bg-clip-padding p-6 pb-4  md:w-[360px] w-full h-fit dark:border-none dark:bg-black/20 dark:bg-clip-padding;
 }
 
 .flex-center {

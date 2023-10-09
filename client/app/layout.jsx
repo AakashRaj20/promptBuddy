@@ -3,7 +3,7 @@ import "@styles/globals.css";
 import Nav from "@components/Nav";
 import Provider from "@components/Provider";
 import ReduxProvider from "@redux_store/ReduxProvider";
-import Head from "next/head";
+import ThemeProviders from "@components/ThemeProviders";
 
 export const metadata = {
   title: "PromptBuddy",
@@ -15,14 +15,16 @@ const RootLayout = ({ children }) => (
     <body>
       <ReduxProvider>
         <Provider>
-          <div className="main">
-            <div className="gradient" />
-          </div>
+          <ThemeProviders>
+            <div className="main">
+              <div className="gradient" />
+            </div>
 
-          <main className="app">
-            <Nav />
-            {children}
-          </main>
+            <main className="app">
+              <Nav />
+              {children}
+            </main>
+          </ThemeProviders>
         </Provider>
       </ReduxProvider>
     </body>

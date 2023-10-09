@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -13,6 +14,8 @@ module.exports = {
       },
       colors: {
         "primary-orange": "#FF5722",
+        "dark-blue-bg": "#2C5050",
+        glassmorphism: "rgba(16, 16, 18, 0.60)",
       },
     },
   },
