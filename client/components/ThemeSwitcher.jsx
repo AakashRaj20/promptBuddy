@@ -6,7 +6,7 @@ import { useTheme } from "next-themes";
 
 const ThemeSwitch = () => {
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
 
   // useEffect only runs on the client, so now we can safely show the UI
   useEffect(() => {
@@ -20,10 +20,10 @@ const ThemeSwitch = () => {
   return (
     <Image
       onClick={() =>
-        setTheme(theme === "dark" ? "light" : "dark")
+        setTheme(resolvedTheme === "dark" ? "light" : "dark")
       }
       className="cursor-pointer sm:flex hidden"
-      src={theme === "dark" ? "/assets/icons/light_mode.svg" : "/assets/icons/dark_mode.svg"}
+      src={resolvedTheme === "dark" ? "/assets/icons/light_mode.svg" : "/assets/icons/dark_mode.svg"}
       alt="light mode"
       width={40}
       height={40}
