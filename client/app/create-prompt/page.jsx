@@ -14,8 +14,10 @@ const CreatePrompt = () => {
   const [post, setPost] = useState({ prompt: "", tag: "" });
 
   useEffect(() => {
-    !session && router.push("/");
-  },[session])
+    if (session === "undefined" || session === null) {
+      router.push("/");
+    }
+  }, [session]);
 
   const createPrompt = async (e) => {
     e.preventDefault();

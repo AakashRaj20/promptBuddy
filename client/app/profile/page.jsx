@@ -25,7 +25,9 @@ const MyProfile = () => {
   }, [session?.user.id]);
 
   useEffect(() => {
-    !session && router.push("/");
+    if(session === "undefined" || session === null){
+      router.push("/");
+    }
   },[session]);
 
   const handleEdit = (post) => {
