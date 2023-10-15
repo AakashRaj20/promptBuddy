@@ -76,7 +76,7 @@
 /* Tailwind Styles */
 @layer components {
   .bottombar {
-    @apply bg-slate-300 fixed left-0 bottom-0 z-10 w-full rounded-t-3xl dark:bg-glassmorphism p-4 dark:backdrop-blur-lg xs:px-7 md:hidden;
+    @apply bg-slate-300 fixed left-0 bottom-0 z-10 w-full rounded-t-3xl dark:bg-black/80 p-4 dark:backdrop-blur-lg xs:px-7 md:hidden;
   }
 
   .bottombar_container {
