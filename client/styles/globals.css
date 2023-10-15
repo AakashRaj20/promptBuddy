@@ -4,10 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 
-  Note: The styles for this gradient grid background is heavily inspired by the creator of this amazing site (https://dub.sh) – all credits go to them! 
-*/
-
 .main {
   width: 100vw;
   min-height: 100vh;
@@ -80,7 +76,7 @@
 /* Tailwind Styles */
 @layer components {
   .bottombar {
-    @apply fixed bottom-0 z-10 w-full rounded-t-3xl bg-glassmorphism p-4 backdrop-blur-lg xs:px-7 md:hidden;
+    @apply bg-slate-300 fixed left-0 bottom-0 z-10 w-full rounded-t-3xl dark:bg-glassmorphism p-4 dark:backdrop-blur-lg xs:px-7 md:hidden;
   }
 
   .bottombar_container {
@@ -92,20 +88,16 @@
   }
 }
 
-.main_div {
-  @apply main dark:bg-black;
-}
-
-.gradient_div {
-  @apply gradient dark:bg-black;
-}
-
-.dark_gradient {
-  @apply bg-gradient-to-r from-gray-900 via-gray-600 to-gray-300 dark:from-gray-400 dark:via-gray-700 dark:to-gray-900;
-}
-
 .app {
   @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6;
+}
+
+.bottombar_image {
+  @apply flex align-middle justify-center items-center flex-col gap-1;
+}
+
+.bottombar_text {
+  @apply text-xs font-inter font-medium text-black dark:text-gray-400;
 }
 
 .black_btn {
@@ -157,7 +149,7 @@
 }
 
 .prompt_layout {
-  @apply space-y-6 py-8 sm:columns-2 sm:gap-6 xl:columns-3;
+  @apply space-y-6 py-8 sm:columns-2 sm:gap-6 xl:columns-3 mb-15;
 }
 
 /* Feed Component */

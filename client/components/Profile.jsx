@@ -11,6 +11,7 @@ import { savedPromptIsLoading } from "@redux_store/slices/savedPromptSlice";
 import { loggedUserIsLoading } from "@redux_store/slices/getPostLoggedUserSlice";
 import Loading from "@components/Loading";
 import { useDispatch, useSelector } from "react-redux";
+import { signOut } from "next-auth/react";
 
 const Profile = ({ name, desc, handleEdit }) => {
   const { data: session } = useSession();
@@ -48,24 +49,41 @@ const Profile = ({ name, desc, handleEdit }) => {
   }, [savedPromptLoading, savedPrompt]);
 
   return (
-    <section className="w-full">
-      <h1 className="head_text text-left">
+    <section>
+      <h1 className="head_text text-left px-2">
         <span className="blue_gradient">{name} Profile</span>
       </h1>
-      <p className="desc text-left">{desc}</p>
+      <p className="desc text-left px-2">{desc}</p>
       {pathname === "/profile" && (
         <div className="flex justify-evenly mt-9">
           <button
-            className={activeBtn === "myposts" ? "mobile_black_btn" : "mobile_outline_btn"}
+            className={
+              activeBtn === "myposts"
+                ? "mobile_black_btn"
+                : "mobile_outline_btn"
+            }
             onClick={handleMypost}
           >
             My Posts
           </button>
           <button
-            className={activeBtn === "savedposts" ? "mobile_black_btn" : "mobile_outline_btn"}
+            className={
+              activeBtn === "savedposts"
+                ? "mobile_black_btn"
+                : "mobile_outline_btn"
+            }
             onClick={handleSavedPost}
           >
             Saved Posts
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              signOut();
+            }}
+            className="mobile_outline_btn sm:hidden"
+          >
+            Sign Out
           </button>
         </div>
       )}
@@ -83,7 +101,8 @@ const Profile = ({ name, desc, handleEdit }) => {
             ))}
         </div>
       )}
-      {!isLoggedUserLoading && loggedPrompts &&
+      {!isLoggedUserLoading &&
+        loggedPrompts &&
         loggedPrompts.length === 0 &&
         activeBtn === "myposts" && (
           <div className="flex justify-center mt-10">
@@ -93,13 +112,16 @@ const Profile = ({ name, desc, handleEdit }) => {
             </p>
           </div>
         )}
-      {(!savedPromptIsLoading || savedPrompt === undefined || savedPrompt[0]?.prompts.length === 0) && activeBtn === "savedposts" && (
-        <div className="flex justify-center mt-10">
-          <p className="text-2xl text-center">
-            No saved prompts yet. Explore and save amazing prompts
-          </p>
-        </div>
-      )}
+      {(!savedPromptIsLoading ||
+        savedPrompt === undefined ||
+        savedPrompt[0]?.prompts.length === 0) &&
+        activeBtn === "savedposts" && (
+          <div className="flex justify-center mt-10">
+            <p className="text-2xl text-center">
+              No saved prompts yet. Explore and save amazing prompts
+            </p>
+          </div>
+        )}
     </section>
   );
 };

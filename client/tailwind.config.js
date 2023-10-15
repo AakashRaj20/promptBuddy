@@ -17,6 +17,13 @@ module.exports = {
         "dark-blue-bg": "#2C5050",
         glassmorphism: "rgba(16, 16, 18, 0.60)",
       },
+      screens: {
+        xs: "400px",
+      },
+      spacing: {
+        15: "3.75rem",
+        25: "6.25rem",
+      },
     },
   },
   plugins: [],

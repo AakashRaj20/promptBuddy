@@ -3,14 +3,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import ThemeSwitch from "./ThemeSwitcher";
+import BottomBar from "./BottomBar";
 import { useEffect, useState } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const Nav = () => {
   const { data: session } = useSession();
-
   const [providers, setProviders] = useState(null);
-  const [toggleDropdown, setToggleDropdown] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -20,7 +19,7 @@ const Nav = () => {
   }, []);
 
   return (
-    <nav className="flex-between w-full mb-16 pt-3">
+    <nav className="flex-between w-full mb-8 pt-3">
       <div className="flex gap-11">
         <Link href="/" className="flex gap-2 flex-center">
           <Image
@@ -32,7 +31,9 @@ const Nav = () => {
           />
           <p className="logo_text orange_gradient">PromptBuddy</p>
         </Link>
-        <ThemeSwitch />
+        <div className="cursor-pointer sm:flex hidden">
+          <ThemeSwitch />
+        </div>
       </div>
 
       {/* Desktop Navigation */}
@@ -79,45 +80,7 @@ const Nav = () => {
       {/* Mobile Navigation */}
       <div className="sm:hidden flex relative">
         {session?.user ? (
-          <div className="flex">
-            <Image
-              src={session?.user.image}
-              width={37}
-              height={37}
-              className="rounded-full"
-              alt="profile"
-              onClick={() => setToggleDropdown(!toggleDropdown)}
-            />
-
-            {toggleDropdown && (
-              <div className="dropdown">
-                <Link
-                  href="/profile"
-                  className="dropdown_link"
-                  onClick={() => setToggleDropdown(false)}
-                >
-                  My Profile
-                </Link>
-                <Link
-                  href="/create-prompt"
-                  className="dropdown_link"
-                  onClick={() => setToggleDropdown(false)}
-                >
-                  Create Prompt
-                </Link>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setToggleDropdown(false);
-                    signOut();
-                  }}
-                  className="mt-5 w-full black_btn"
-                >
-                  Sign Out
-                </button>
-              </div>
-            )}
-          </div>
+          <ThemeSwitch />
         ) : (
           <>
             {providers &&
@@ -136,8 +99,11 @@ const Nav = () => {
           </>
         )}
       </div>
+      <BottomBar />
     </nav>
   );
 };
 
 export default Nav;
+
+

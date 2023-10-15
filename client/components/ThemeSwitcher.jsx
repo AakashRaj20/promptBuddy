@@ -19,11 +19,12 @@ const ThemeSwitch = () => {
 
   return (
     <Image
-      onClick={() =>
-        setTheme(resolvedTheme === "dark" ? "light" : "dark")
+      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      src={
+        resolvedTheme === "dark"
+          ? "/assets/icons/light_mode.svg"
+          : "/assets/icons/dark_mode.svg"
       }
-      className="cursor-pointer sm:flex hidden"
-      src={resolvedTheme === "dark" ? "/assets/icons/light_mode.svg" : "/assets/icons/dark_mode.svg"}
       alt="light mode"
       width={40}
       height={40}
@@ -32,4 +33,3 @@ const ThemeSwitch = () => {
 };
 
 export default ThemeSwitch;
-

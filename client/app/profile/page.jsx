@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPromptsLoggedUser } from "@redux_store/slices/getPostLoggedUserSlice";
 import { prompts } from "@redux_store/slices/getPostLoggedUserSlice";
@@ -25,10 +26,10 @@ const MyProfile = () => {
   }, [session?.user.id]);
 
   useEffect(() => {
-    if(session === "undefined" || session === null){
+    if (session === "undefined" || session === null) {
       router.push("/");
     }
-  },[session]);
+  }, [session]);
 
   const handleEdit = (post) => {
     router.push(`/update-prompt?id=${post._id}`);
