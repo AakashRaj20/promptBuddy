@@ -22,7 +22,7 @@ const PromptCardList = ({ data, handleTagClick }) => {
   return isPromptLoading ? (
     <Loading />
   ) : (
-    <div className="mt-5 prompt_layout w-full sm:w-auto">
+    <div className="mt-1 prompt_layout w-full sm:w-auto">
       {data && data.map((post) => (
         <PromptCard
           key={post._id}
