@@ -49,7 +49,7 @@ const Profile = ({ name, desc, handleEdit }) => {
   }, [savedPromptLoading, savedPrompt]);
 
   return (
-    <section>
+    <section className="w-full">
       <h1 className="head_text text-left px-2">
         <span className="blue_gradient">{name} Profile</span>
       </h1>
