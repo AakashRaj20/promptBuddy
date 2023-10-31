@@ -1,6 +1,7 @@
 import Prompt from "../model/prompt.js";
 import User from "../model/user.js";
 import SavedPrompt from "../model/savedPrompt.js";
+import VotedPrompt from "../model/voted.js";
 import mongoose from "mongoose";
 import { isAuthenticated } from "../middleware/middleware.js";
 
@@ -169,11 +170,6 @@ export const getSavedPrompts = async (req, res) => {
   try {
     const { userId } = req.params;
 
-    // Verify that the database connection is ready before proceeding
-    if (mongoose.connection.readyState !== 1) {
-      return res.status(500).json({ message: "Database connection not ready" });
-    }
-
     const savedPrompts = await SavedPrompt.aggregate([
       {
         $match: {
@@ -223,21 +219,86 @@ export const getSavedPrompts = async (req, res) => {
               creator: "$prompts.creator", // Replace with creatorData if you want an object
               prompt: "$prompts.prompt",
               tag: "$prompts.tag",
+              votes: "$prompts.votes",
+              votedBy: "$prompts.votedBy",
             },
           },
         },
       },
     ]);
 
-    if (!savedPrompts || savedPrompts.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "No saved prompts found for this user" });
-    }
+    // if (!savedPrompts || savedPrompts.length === 0) {
+    //   return res
+    //     .status(404)
+    //     .json({ message: "No saved prompts found for this user" });
+    // }
 
     return res.status(200).json(savedPrompts);
   } catch (error) {
     console.error(error);
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+// Post Upvote prompt by ID
+export const upvotePrompt = async (req, res) => {
+  try {
+    const { promptId, userId } = req.params;
+    //const { userId } = req.body; Assuming you have userId in the request body
+
+    // Find the prompt by ID
+    const prompt = await Prompt.findById(promptId);
+
+    if (!prompt) {
+      return res.status(404).json({ message: "Prompt not found" });
+    }
+
+    // Check if the user has already voted on this prompt (prevent multiple votes)
+    if (prompt.votedBy.includes(userId)) {
+      return res
+        .status(400)
+        .json({ message: "User has already voted on this prompt" });
+    }
+
+    // Increment the vote count by 1 and add the user to the votedBy array
+    prompt.votes = prompt.votes + 1;
+    prompt.votedBy.push(userId);
+
+    // Save the updated prompt
+    await prompt.save();
+
+    return res.status(200).json({ message: "Prompt upvoted successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+
+// Delete Upvote prompt by ID
+export const deleteUpvotePrompt = async (req, res) => {
+  try {
+    const { promptId, userId } = req.params;
+
+    // Find the prompt by ID
+    const prompt = await Prompt.findById(promptId);
+
+    if (!prompt) {
+      return res.status(404).json({ message: "Prompt not found" });
+    }
+
+    // Update the prompt's votes
+    prompt.votes = prompt.votes - 1;
+    prompt.votedBy = prompt.votedBy.filter(
+      (votedById) => votedById.toString() !== userId
+    );
+
+    // Save the updated prompt
+    await prompt.save();
+
+    return res
+      .status(200)
+      .json({ message: "Prompt upvote deleted successfully" });
+  } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };

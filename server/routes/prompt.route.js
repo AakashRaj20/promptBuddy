@@ -10,6 +10,8 @@ import {
   savePrompt,
   unsavePrompt,
   getSavedPrompts,
+  upvotePrompt,
+  deleteUpvotePrompt,
 } from "../controller/prompt.controller.js";
 
 const router = express.Router();
@@ -23,6 +25,8 @@ router.patch("/edit-prompt/:id", editPrompt);
 router.delete("/delete-prompt/:id", deletePrompt);
 router.delete("/user/:userId/prompt/:promptId/unsave", unsavePrompt);
 router.get("/user/:userId/savedPrompts", getSavedPrompts);
+router.post("/user/:userId/prompt/:promptId/upvote", upvotePrompt);
+router.delete("/user/:userId/prompt/:promptId/downvote", deleteUpvotePrompt);
 
 
 

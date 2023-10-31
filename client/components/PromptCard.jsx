@@ -25,6 +25,8 @@ const PromptCard = ({ post, handleEdit, handleTagClick }) => {
   const dispatch = useDispatch();
   const savedPrompt = useSelector(savedPrompts);
   const [isSaved, setIsSaved] = useState(false); // Track save/unsave state
+  const [isUpVoted, setIsUpVoted] = useState(false); // Track upvote state
+  const [voteCount, setVoteCount] = useState(post.votes);
 
   useEffect(() => {
     // Check if the post is saved by the logged-in user
@@ -35,6 +37,11 @@ const PromptCard = ({ post, handleEdit, handleTagClick }) => {
       setIsSaved(isPostSaved);
     }
   }, [session, savedPrompt, post]);
+console.log(post.votedVy);
+  useEffect(() => {
+    const voteStatus = post?.votedBy?.some((vote) => vote === session?.user.id);
+    setIsUpVoted(voteStatus);
+  },[session, post]);
 
   const handleProfileClick = () => {
     if (post?.creator?._id === session?.user.id) return router.push("/profile");
@@ -50,7 +57,6 @@ const PromptCard = ({ post, handleEdit, handleTagClick }) => {
 
   const handleToggleSave = async () => {
     if (!session?.user) {
-      // Handle the case where the user is not logged in
       return;
     }
 
@@ -79,6 +85,22 @@ const PromptCard = ({ post, handleEdit, handleTagClick }) => {
     await axios.delete(`${baseUrl}/api/delete-prompt/${post._id}`);
   };
 
+  console.log(isUpVoted);
+
+  const handleVote = async () => {
+    if (isUpVoted) {
+      await axios.delete(
+        `${baseUrl}/api/user/${session?.user.id}/prompt/${post._id}/downvote`
+      );
+      setVoteCount((prev) => prev - 1);
+    } else {
+      await axios.post(`${baseUrl}/api/user/${session?.user.id}/prompt/${post._id}/upvote`);
+      setVoteCount((prev) => prev + 1);
+    }
+
+    setIsUpVoted((prev) => !prev);
+  };
+
   return (
     <div className="prompt_card">
       <div className="flex justify-between items-start gap-4">
@@ -98,12 +120,45 @@ const PromptCard = ({ post, handleEdit, handleTagClick }) => {
             <h3 className="font-satoshi font-semibold text-gray-900 dark:text-white">
               {post.creator?.username}
             </h3>
-            <p className="font-inter text-sm text-gray-500 dark:text-white">
-              {post.creator?.email}
-            </p>
           </div>
         </div>
+      </div>
 
+      <p className="my-4 font-satoshi text-sm text-gray-700 dark:text-white">
+        {post.prompt}
+      </p>
+      <p
+        className="font-inter text-sm blue_gradient cursor-pointer"
+        onClick={() => handleTagClick && handleTagClick(post.tag)}
+      >
+        #{post.tag}
+      </p>
+
+      <div className="flex justify-between mt-4">
+        <div className="copy_btn">
+          <div className="flex gap-4">
+            <Image
+              onClick={handleVote}
+              src={
+                isUpVoted > 0
+                  ? "/assets/icons/thumbsUp.svg"
+                  : "/assets/icons/thumbUp.svg"
+              }
+              alt="thumbsUp_icon"
+              width={40}
+              height={40}
+            />
+            <p>{voteCount}</p>
+          </div>
+        </div>
+        <div className="copy_btn">
+          <Image
+            src="/assets/icons/share.svg"
+            alt="share_icon"
+            width={23}
+            height={23}
+          />
+        </div>
         <div className="copy_btn" onClick={handleCopy}>
           <Image
             src={
@@ -112,10 +167,11 @@ const PromptCard = ({ post, handleEdit, handleTagClick }) => {
                 : "/assets/icons/copy.svg"
             }
             alt={copied === post.prompt ? "tick_icon" : "copy_icon"}
-            width={12}
-            height={12}
+            width={20}
+            height={20}
           />
         </div>
+
         {session?.user.id && (
           <div className="copy_btn" onClick={handleToggleSave}>
             <Image
@@ -124,21 +180,13 @@ const PromptCard = ({ post, handleEdit, handleTagClick }) => {
                   ? "/assets/icons/saved.svg"
                   : "/assets/icons/save.svg"
               }
-              alt={copied === post.prompt ? "saved_icon" : "save_icon"}
-              width={12}
-              height={12}
+              alt="save_icon"
+              width={20}
+              height={20}
             />
           </div>
         )}
       </div>
-
-      <p className="my-4 font-satoshi text-sm text-gray-700 dark:text-white">{post.prompt}</p>
-      <p
-        className="font-inter text-sm blue_gradient cursor-pointer"
-        onClick={() => handleTagClick && handleTagClick(post.tag)}
-      >
-        #{post.tag}
-      </p>
 
       {session?.user.id === post.creator?._id && pathName === "/profile" && (
         <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">

@@ -13,6 +13,16 @@ const PromptSchema = new Schema({
     type: String,
     required: [true, "Tag is required."],
   },
+  votes: {
+    type: Number,
+    default: 0,
+  },
+  votedBy: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
 });
 
 const Prompt = model("Prompt", PromptSchema);

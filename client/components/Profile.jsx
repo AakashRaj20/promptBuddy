@@ -23,7 +23,7 @@ const Profile = ({ name, desc, handleEdit }) => {
   const savedPromptLoading = useSelector(savedPromptIsLoading);
   const [data, setData] = useState([]);
   const [activeBtn, setActiveBtn] = useState("myposts");
-
+console.log(savedPrompt);
   const handleMypost = async () => {
     loggedPrompts.length > 0 ? setData(loggedPrompts) : setData([]);
     setActiveBtn("myposts");

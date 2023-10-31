@@ -18,6 +18,7 @@ const MyProfile = () => {
   const loggedPrompts = useSelector(prompts);
   const [myPosts, setMyPosts] = useState([]);
 
+
   useEffect(() => {
     if (session?.user.id) {
       dispatch(fetchPromptsLoggedUser(session?.user.id));
