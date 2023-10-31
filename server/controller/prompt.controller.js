@@ -1,9 +1,7 @@
 import Prompt from "../model/prompt.js";
 import User from "../model/user.js";
 import SavedPrompt from "../model/savedPrompt.js";
-import VotedPrompt from "../model/voted.js";
 import mongoose from "mongoose";
-import { isAuthenticated } from "../middleware/middleware.js";
 
 // GET all prompts
 export const getAllPrompts = async (req, res) => {
@@ -272,7 +270,6 @@ export const upvotePrompt = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
-
 
 // Delete Upvote prompt by ID
 export const deleteUpvotePrompt = async (req, res) => {
