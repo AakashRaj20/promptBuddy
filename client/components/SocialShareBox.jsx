@@ -23,6 +23,10 @@ import {
 } from "next-share";
 
 const SocialShare = ({ url }) => {
+  const handleCopy = () => {
+    navigator.clipboard.writeText(url);
+  };
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -43,12 +47,8 @@ const SocialShare = ({ url }) => {
           <Label htmlFor="link" className="sr-only">
             Link
           </Label>
-          <Input
-            id="link"
-            defaultValue={url}
-            readOnly
-          />
-          <Button type="submit" size="sm" className="px-3">
+          <Input id="link" defaultValue={url} readOnly />
+          <Button type="button" onClick={handleCopy} size="sm" className="px-3">
             <Image
               src="/assets/icons/copy.svg"
               alt="copy_icon"
