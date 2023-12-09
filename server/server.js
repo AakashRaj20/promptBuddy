@@ -25,7 +25,7 @@ mongoose.Promise = global.Promise;
 mongoose
   .connect(mongouri, {
     useNewUrlParser: true,
-    dbName: "share_prompt_prod",
+    dbName: "share_prompt",
   })
   .then(() => {
     console.log("Databse Connected Successfully!!");

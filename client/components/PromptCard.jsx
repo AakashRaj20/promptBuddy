@@ -105,6 +105,7 @@ const PromptCard = ({ post, handleEdit, handleTagClick, dialougeStyle }) => {
   };
 
   const promptUrl = `${window.location.origin}/prompt/${post._id}`;
+  console.log(post);
 
   return (
     <div className={dialougeStyle ? dialougeStyle : "prompt_card"}>
