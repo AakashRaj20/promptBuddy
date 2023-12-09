@@ -181,7 +181,15 @@
 
 /* PromptCard Component */
 .prompt_card {
-  @apply flex-1 break-inside-avoid rounded-lg border border-gray-300 bg-white/20 bg-clip-padding p-6 pb-4  md:w-[360px] w-full h-fit dark:border-none dark:bg-black/20 dark:bg-clip-padding;
+  @apply flex-1 break-inside-avoid rounded-lg border border-gray-300 bg-white/20 bg-clip-padding p-6 pb-4  md:w-[400px] w-full h-fit dark:border-none dark:bg-black/20 dark:bg-clip-padding;
+}
+
+.dialouge_prompt_card {
+  @apply flex-1 break-inside-avoid rounded-lg border border-gray-300 bg-white/20 bg-clip-padding p-6 pb-4 w-full h-fit dark:border-none dark:bg-black/20 dark:bg-clip-padding;
+}
+
+.popover_card {
+  @apply flex flex-col w-full gap-7 border-gray-300 bg-white dark:border-none dark:bg-black;
 }
 
 .flex-center {

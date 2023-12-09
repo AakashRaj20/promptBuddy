@@ -15,8 +15,9 @@ import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import baseUrl from "@redux_store/baseurl";
 import axios from "axios";
+import SocialShare from "./SocialShareBox";
 
-const PromptCard = ({ post, handleEdit, handleTagClick }) => {
+const PromptCard = ({ post, handleEdit, handleTagClick, dialougeStyle }) => {
   const { data: session } = useSession();
   const pathName = usePathname();
   const router = useRouter();
@@ -37,11 +38,11 @@ const PromptCard = ({ post, handleEdit, handleTagClick }) => {
       setIsSaved(isPostSaved);
     }
   }, [session, savedPrompt, post]);
-console.log(post.votedVy);
+  console.log(post.votedVy);
   useEffect(() => {
     const voteStatus = post?.votedBy?.some((vote) => vote === session?.user.id);
     setIsUpVoted(voteStatus);
-  },[session, post]);
+  }, [session, post]);
 
   const handleProfileClick = () => {
     if (post?.creator?._id === session?.user.id) return router.push("/profile");
@@ -85,7 +86,7 @@ console.log(post.votedVy);
     await axios.delete(`${baseUrl}/api/delete-prompt/${post._id}`);
   };
 
-  console.log(isUpVoted);
+  //console.log(isUpVoted);
 
   const handleVote = async () => {
     if (isUpVoted) {
@@ -94,15 +95,19 @@ console.log(post.votedVy);
       );
       setVoteCount((prev) => prev - 1);
     } else {
-      await axios.post(`${baseUrl}/api/user/${session?.user.id}/prompt/${post._id}/upvote`);
+      await axios.post(
+        `${baseUrl}/api/user/${session?.user.id}/prompt/${post._id}/upvote`
+      );
       setVoteCount((prev) => prev + 1);
     }
 
     setIsUpVoted((prev) => !prev);
   };
 
+  const promptUrl = `${window.location.origin}/prompt/${post._id}`;
+
   return (
-    <div className="prompt_card">
+    <div className={dialougeStyle ? dialougeStyle : "prompt_card"}>
       <div className="flex justify-between items-start gap-4">
         <div
           className="flex-1 flex justify-start items-center gap-3 cursor-pointer"
@@ -131,7 +136,7 @@ console.log(post.votedVy);
         className="font-inter text-sm blue_gradient cursor-pointer"
         onClick={() => handleTagClick && handleTagClick(post.tag)}
       >
-        #{post.tag}
+        {post.tag}
       </p>
 
       <div className="flex justify-between mt-4">
@@ -152,12 +157,7 @@ console.log(post.votedVy);
           </div>
         </div>
         <div className="copy_btn">
-          <Image
-            src="/assets/icons/share.svg"
-            alt="share_icon"
-            width={23}
-            height={23}
-          />
+          <SocialShare url={promptUrl} />
         </div>
         <div className="copy_btn" onClick={handleCopy}>
           <Image
