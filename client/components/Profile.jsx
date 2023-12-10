@@ -91,7 +91,7 @@ console.log(savedPrompt);
         <Loading />
       ) : (
         <div className="mt-10 prompt_layout">
-          {data.length > 0 &&
+          {data && data.length > 0 &&
             data.map((post) => (
               <PromptCard
                 key={post._id}
